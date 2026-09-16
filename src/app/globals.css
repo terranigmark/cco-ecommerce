@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-display: var(--font-anton);
+  --font-mono: var(--font-plex-mono);
+  --font-sans: var(--font-instrument);
+}
+
+@layer base {
+  :root,
+  [data-theme="dark"] {
+    --bg: #161719;
+    --sf: #1c1d20;
+    --sf2: #25272b;
+    --bd: #3a3d42;
+    --ln: #2c2f34;
+    --tx: #efeae0;
+    --mu: #a6a39a;
+    --ac: #f5c518;
+    --act: #0c0c0c;
+    --ink: #efeae0;
+    --ok: #7bd389;
+    --warn: #f2a93b;
+    --img: #202226;
+    --imgline: #2c2f34;
+    --grain: 0.09;
+  }
+
+  [data-theme="light"] {
+    --bg: #d9c9a8;
+    --sf: #e6d9bb;
+    --sf2: #cdbb95;
+    --bd: #8f7d58;
+    --ln: #b9a780;
+    --tx: #141210;
+    --mu: #4f4635;
+    --ac: #f5c518;
+    --act: #0c0c0c;
+    --ink: #141210;
+    --ok: #2e7d46;
+    --warn: #9a4d12;
+    --img: #cfbf9c;
+    --imgline: #bfae88;
+    --grain: 0.14;
+  }
+
+  html,
+  body {
+    height: 100%;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--tx);
+    font-family: var(--font-instrument), system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    color: var(--ac);
+  }
+
+  input,
+  select,
+  textarea,
+  button {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+  }
+
+  input[type="range"] {
+    accent-color: #f5c518;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    accent-color: #f5c518;
+    width: 15px;
+    height: 15px;
+    margin: 0;
+  }
+
+  ::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: var(--bd);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@layer components {
+  .grain::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: var(--grain);
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 .8 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* Links that behave like rows/cards keep their own colors on hover. */
+  .row-link:hover {
+    color: inherit;
+  }
+
+  .row-link.tint:hover {
+    background: var(--sf2);
+  }
+
+  .mono {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+  }
+
+  .display {
+    font-family: var(--font-anton), Impact, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    line-height: 0.9;
+    font-weight: 400;
+  }
+
+  .kicker {
+    font-family: var(--font-plex-mono), ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mu);
+  }
+
+  /* Neo-brutalist CTA: hard border with a solid offset shadow that collapses on press. */
+  .btn-neo {
+    border: 2px solid var(--ink);
+    background: var(--ac);
+    color: var(--act);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    box-shadow: 5px 5px 0 var(--ink);
+    transition:
+      transform 0.12s,
+      box-shadow 0.12s;
+  }
+
+  .btn-neo:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .btn-neo:active {
+    transform: translate(5px, 5px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+
+  .btn-neo-sm {
+    box-shadow: 3px 3px 0 var(--ink);
+  }
+
+  .btn-neo-sm:hover {
+    transform: translate(1px, 1px);
+    box-shadow: 2px 2px 0 var(--ink);
+  }
+
+  .btn-neo-sm:active {
+    transform: translate(3px, 3px);
+    box-shadow: 0 0 0 var(--ink);
+  }
+
+  .btn-ghost {
+    border: 2px solid var(--ink);
+    background: transparent;
+    color: var(--tx);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition:
+      background 0.15s,
+      color 0.15s;
+  }
+
+  .btn-ghost:hover {
+    background: var(--tx);
+    color: var(--bg);
+  }
+
+  .field {
+    height: 42px;
+    padding: 0 12px;
+    border: 0;
+    border-bottom: 2px solid var(--bd);
+    background: var(--sf);
+    outline: 0;
+  }
+
+  .field:focus {
+    border-bottom-color: var(--ac);
+  }
+
+  .field-error {
+    border-bottom-color: var(--warn);
+  }
+
+  .barcode {
+    height: 18px;
+    width: 120px;
+    opacity: 0.8;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--tx) 0 2px,
+      transparent 2px 4px,
+      var(--tx) 4px 5px,
+      transparent 5px 8px,
+      var(--tx) 8px 11px,
+      transparent 11px 13px
+    );
+  }
+
+  .hatch {
+    background: repeating-linear-gradient(
+      135deg,
+      var(--imgline) 0 6px,
+      transparent 6px 12px
+    );
+  }
+}
